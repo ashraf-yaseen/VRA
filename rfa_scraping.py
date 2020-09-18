@@ -6,7 +6,7 @@ import pandas as pd
 
 from bs4 import BeautifulSoup
 
-#%%
+# %%
 # Load RFA files into memory
 rfa_list = pd.read_pickle(r"G:\My Drive\Backup\Documents\UTHSC Biostats\Recommender Systems\Grant Recommendations\rfa_ls.ls")
 # %% 
