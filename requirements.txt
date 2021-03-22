@@ -2,6 +2,7 @@ argon2-cffi==20.1.0
 async-generator==1.10
 attrs==20.3.0
 backcall==0.2.0
+beautifulsoup4==4.9.3
 biopython==1.78
 bleach==3.3.0
 certifi==2020.12.5
@@ -57,6 +58,7 @@ scipy==1.6.1
 selenium==3.141.0
 Send2Trash==1.5.0
 six==1.15.0
+soupsieve==2.2.1
 terminado==0.9.3
 testpath==0.4.4
 threadpoolctl==2.1.0
