@@ -17,6 +17,7 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 
 driver = webdriver.Chrome(executable_path = binary_path, options = chrome_options)
 driver.get(base_url)
+
 # %%
 # TODO: these need to be functions?
 last_page = driver.find_element_by_link_text("last")
@@ -37,13 +38,76 @@ while page_num < last_page_num:
     if next_page_num > page_num:
         next_page.click()
         page_num += 1
+
 # %%
-# TODO: See if there's a better version to parse each page to a tidy df 
-# (probably gonna take selenium)
-general_info = {}
+conference_title = []
+conference_link = []
+location = []
+date = []
+conference_description = []
+tags = []
+
 for url in url_list:
-    general_info_table = pd.read_html(url, match = "When")[3]
-    general_info[url] = general_info_table
+    driver.get(url)
+    try:
+        url_title = driver.find_element_by_css_selector("head > meta:nth-child(3)").get_attribute("content")
+    except:
+        url_title - "N/A"
+    
+    try:
+        url_link = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(3) > td > a").get_attribute("href")
+    except:
+        url_link = "N/A"
+    
+    try:
+        url_date = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(5) > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(1) > td").text
+    except: 
+        url_date = "N/A"
+    
+    try:
+        url_location = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(5) > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(2) > td").text
+    except:
+        url_location = "N/A"
+    
+    try:
+        url_tags = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(5) > td > table > tbody > tr > td > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2) > td > h5").text.replace("Categories", "")
+    except:
+        try:
+            url_tags = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(4) > td > table > tbody > tr > td > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2) > td > h5").text.replace("Categories", "")
+        except:
+            url_tags = "N/A"
+
+    try:
+        url_description = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(8) > td > div").text.replace("\n", " ")
+    except:
+        try:
+            url_description = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(7) > td > div").text.replace("\n", " ")
+        except:
+            url_description = "N/A"
+
+    conference_title.append(url_title)
+    conference_link.append(url_link)
+    location.append(url_location)
+    date.append(url_date)
+    conference_description.append(url_description)
+    tags.append(url_tags)
+
+driver.quit()
 # %%
-# USE CSS SELECTORS TO FIND AND REPLACE REQUIRED FIELDS
-# CRREATY EMPTY DICT WITH KEYS AS DF COLUMNS AND THEN PD.CONCAT 
+wikicfp_publichealth = pd.DataFrame(zip(conference_title, 
+                                        conference_link,
+                                        date,
+                                        location,
+                                        tags,
+                                        url_list,
+                                        conference_description),
+                                        columns = ["Conference Title",
+                                                    "Conference Webpage",
+                                                    "Conference Date",
+                                                    "Conference Location",
+                                                    "WikiCFP Tags",
+                                                    "WikiCFP Link",
+                                                    "Conference Description"])
+
+# %%
+wikicfp_publichealth.to_excel("wikicfp_publichealth.xlsx")
