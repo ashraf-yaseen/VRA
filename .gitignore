@@ -3,3 +3,4 @@ pyproject.toml
 *.csv
 *.yaml
 .devcontainer
+*.xlsx
