@@ -41,3 +41,12 @@ while page_num < last_page_num:
         next_page.click()
         page_num += 1
 # %%
+# TODO: See if there's a better version to parse each page to a tidy df 
+# (probably gonna take selenium)
+general_info = {}
+for url in url_list:
+    general_info_table = pd.read_html(url, match = "When")[3]
+    general_info[url] = general_info_table
+# %%
+# USE CSS SELECTORS TO FIND AND REPLACE REQUIRED FIELDS
+# CRREATY EMPTY DICT WITH KEYS AS DF COLUMNS AND THEN PD.CONCAT 
