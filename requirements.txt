@@ -12,6 +12,7 @@ chromedriver-py==88.0.4324.96
 decorator==4.4.2
 defusedxml==0.7.1
 entrypoints==0.3
+et-xmlfile==1.0.1
 idna==2.10
 ipykernel==5.5.0
 ipython==7.21.0
@@ -36,6 +37,7 @@ nbformat==5.1.2
 nest-asyncio==1.5.1
 notebook==6.2.0
 numpy==1.20.0
+openpyxl==3.0.7
 packaging==20.9
 pandas==1.2.3
 pandocfilters==1.4.3
