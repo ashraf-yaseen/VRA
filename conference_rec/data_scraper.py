@@ -1,9 +1,6 @@
 # %%
-import requests
-
 import pandas as pd
 
-from bs4 import BeautifulSoup
 from chromedriver_py import binary_path
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
