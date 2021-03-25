@@ -21,10 +21,23 @@ chrome_options.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(executable_path = binary_path, options = chrome_options)
 driver.get(base_url)
 # %%
-# TODO: these need to be functions 
-all_links = driver.find_elements_by_xpath("//a[contains(@href, 'event.showcfp?')]")
-for link in all_links:
-    print(link.get_attribute("href"))
+# TODO: these need to be functions?
+last_page = driver.find_element_by_link_text("last")
+last_page_num = last_page.get_attribute("href")
+last_page_num = int(last_page_num[len(last_page_num) - 1])
 
-pages = driver.find_elements_by_xpath("//td[contains(text(), 'Total of')]")
-print([page.text for page in pages])
+page_num = 1
+url_list = []
+while page_num < last_page_num:
+    all_links = driver.find_elements_by_xpath("//a[contains(@href, 'event.showcfp?')]")
+    for link in all_links:
+        url_list.append(link.get_attribute("href"))
+    
+    next_page = driver.find_element_by_link_text("next")
+    next_page_num = next_page.get_attribute("href")
+    next_page_num = int(next_page_num[len(next_page_num) - 1])
+
+    if next_page_num > page_num:
+        next_page.click()
+        page_num += 1
+# %%
