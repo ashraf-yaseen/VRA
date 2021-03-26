@@ -4,3 +4,5 @@ pyproject.toml
 *.yaml
 .devcontainer
 *.xlsx
+test.zip
+*.pkl
