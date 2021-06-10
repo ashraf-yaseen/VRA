@@ -6,3 +6,5 @@ pyproject.toml
 *.xlsx
 test.zip
 *.pkl
+*.pdf
+*.pptx
