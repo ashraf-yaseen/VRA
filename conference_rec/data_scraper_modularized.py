@@ -1,5 +1,6 @@
 # %%
 import time
+import logging
 
 import pandas as pd
 import numpy as np
@@ -119,6 +120,8 @@ def sqlite_out(info_dict):
 
 # %%
 if __name__ == "__main__":
+    logger = logging.getLogger(__name__)
+
     categories = ["NLP", "bioinformatics", "environment", "healthcare", "biotechnology", "renewable%20energy", "natural%20language%20processing", "biology", "biomedical%20engineering", "data%20science", "medicine", "environmental%20engineering", "chemistry", "informatics", "medical",
     "information%20science", "informatics", "sustainable%20development", "biomedical", "health%20informatics", "computational%20biology", "neuroscience", "cognitive%20science", "statistics", "life%20sciences", "nursing", "information%20system", "mobility", "medical%20imaging", "data%20analytics", "ehealth",
     "text%20mining", "chemical", "e-health", "public%20health", "chemical%20engineering", "analytics", "nutrition", "environmental%20sciences", "business%20intelligence", "recommender%20systems", "pediatrics", "ecology", "molecular%20biology", "cardiology", "cancer", "climate%20change", "environmental", "neurology",
@@ -142,8 +145,13 @@ if __name__ == "__main__":
     wikicfp_info = {}
 
     for index, item in enumerate(cat_urls):
-        url_list = get_category_cfp_links(item, driver)
-        wikicfp = scrape(url_list, driver)
-        wikicfp_info[f"wikicfp_{names[index]}"] = wikicfp
+        try:
+            url_list = get_category_cfp_links(item, driver)
+            wikicfp = scrape(url_list, driver)
+            wikicfp_info[f"wikicfp_{names[index]}"] = wikicfp
+        except:
+            logger.exception(f"Failed to scrape {names[index]}")
+
+            continue
     
     sqlite_out(wikicfp_info)
