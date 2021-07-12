@@ -27,7 +27,7 @@ def get_category_cfp_links(url, driver):
     current_page = driver.current_url
 
     url_list = []
-    while current_page != last_page:
+    while current_page != next_page:
         all_links = driver.find_elements_by_xpath("//a[contains(@href, 'event.showcfp?')]")
         for link in all_links:
             url_list.append(link.get_attribute("href"))
@@ -60,7 +60,7 @@ def scrape(url_list, driver):
         try:
             url_title = driver.find_element_by_css_selector("head > meta:nth-child(3)").get_attribute("content")
         except:
-            url_title - "N/A"
+            url_title = "N/A"
         
         try:
             url_link = driver.find_element_by_css_selector("body > div:nth-child(5) > center > table > tbody > tr:nth-child(3) > td > a").get_attribute("href")
@@ -155,11 +155,12 @@ if __name__ == "__main__":
 
     wikicfp_info = {}
 
-    for index, item in enumerate(cat_urls[17:]):
+    for index, item in enumerate(cat_urls):
         try:
             url_list = get_category_cfp_links(item, driver)
             wikicfp = scrape(url_list, driver)
             wikicfp_info[f"wikicfp_{names[index]}"] = wikicfp
+            time.sleep(30)
         except:
             logger.exception(f"Failed to scrape {names[index]}")
 
