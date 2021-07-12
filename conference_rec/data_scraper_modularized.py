@@ -8,31 +8,42 @@ import sqlalchemy as sql
 
 from chromedriver_py import binary_path
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 
 # %%
 def get_category_cfp_links(url, driver):
     driver.get(url)
 
-    next_page_link = driver.find_element_by_link_text("next")
-    next_page = next_page_link.get_attribute("href")
+    try:
+        next_page_link = driver.find_element_by_link_text("next")
+        next_page = next_page_link.get_attribute("href")
+    except NoSuchElementException:
+        pass
+
+    last_page_link = driver.find_element_by_link_text("last")
+    last_page = last_page_link.get_attribute("href")
 
     current_page = driver.current_url
 
     url_list = []
-    while current_page != next_page:
+    while current_page != last_page:
         all_links = driver.find_elements_by_xpath("//a[contains(@href, 'event.showcfp?')]")
         for link in all_links:
             url_list.append(link.get_attribute("href"))
         
-        next_page_link = driver.find_element_by_link_text("next")
-        next_page = next_page_link.get_attribute("href")
-        
-        current_page = driver.current_url
-        
-        next_page_link.click()
+        try:
+            next_page_link = driver.find_element_by_link_text("next")
+            next_page = next_page_link.get_attribute("href")
+        except NoSuchElementException:
+            pass
 
-    url_list = list(np.unique(url_list))
+        current_page = driver.current_url
+
+        try: 
+            next_page_link.click()
+        except StaleElementReferenceException:
+            break
 
     return url_list
 
@@ -144,7 +155,7 @@ if __name__ == "__main__":
 
     wikicfp_info = {}
 
-    for index, item in enumerate(cat_urls):
+    for index, item in enumerate(cat_urls[17:]):
         try:
             url_list = get_category_cfp_links(item, driver)
             wikicfp = scrape(url_list, driver)

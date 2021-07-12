@@ -4,12 +4,13 @@ import numpy as np
 
 from chromedriver_py import binary_path
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as ec
 
 # %%
 # website 1 is www.wikicfp.com
-base_url = r"http://www.wikicfp.com/cfp/call?conference=public%20health"
+base_url = r"http://www.wikicfp.com/cfp/call?conference=biomedical"
 
 # initiate selenium webdriver
 chrome_options = Options()
@@ -22,23 +23,35 @@ driver.get(base_url)
 
 # %%
 # TODO: these need to be functions?
-next_page_link = driver.find_element_by_link_text("next")
-next_page = next_page_link.get_attribute("href")
+try:
+    next_page_link = driver.find_element_by_link_text("next")
+    next_page = next_page_link.get_attribute("href")
+except NoSuchElementException:
+    pass
+
+last_page_link = driver.find_element_by_link_text("last")
+last_page = last_page_link.get_attribute("href")
 
 current_page = driver.current_url
 
 url_list = []
-while current_page != next_page:
+while current_page != last_page:
     all_links = driver.find_elements_by_xpath("//a[contains(@href, 'event.showcfp?')]")
     for link in all_links:
         url_list.append(link.get_attribute("href"))
     
-    next_page_link = driver.find_element_by_link_text("next")
-    next_page = next_page_link.get_attribute("href")
-    
+    try:
+        next_page_link = driver.find_element_by_link_text("next")
+        next_page = next_page_link.get_attribute("href")
+    except NoSuchElementException:
+        pass
+
     current_page = driver.current_url
-    
-    next_page_link.click()
+
+    try: 
+        next_page_link.click()
+    except StaleElementReferenceException:
+        break
 
 url_list = list(np.unique(url_list))
 # %%
@@ -113,4 +126,3 @@ wikicfp_publichealth = pd.DataFrame(zip(conference_title,
 
 # %%
 wikicfp_publichealth.to_pickle("wikicfp_publichealth.pkl")
-# %%
