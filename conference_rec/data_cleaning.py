@@ -54,4 +54,3 @@ if __name__ == "__main__":
     wikicfp = read_folder("/workspaces/VRA/conference_rec/wikicfp_csv")
     wikicfp = unique_confs_per_year(wikicfp)
     wikicfp = better_dates(wikicfp)
-# %%
