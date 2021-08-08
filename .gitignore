@@ -9,3 +9,4 @@ test.zip
 *.pdf
 *.pptx
 *.db
+__pycache__
