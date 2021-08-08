@@ -1,11 +1,11 @@
 # %%
-import nltk
 import glob
-
-import pandas as pd
-import numpy as np
+import nltk
 
 import data_cleaning as dataClean
+import multiprocessing as mp
+import numpy as np
+import pandas as pd
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -57,7 +57,8 @@ def preprocess_sentences(text):
     finalsent = finalsent.replace("'d", " would")
     return finalsent
 
-wiki_token["processed_soup"] = wiki_token["soup"].apply(preprocess_sentences)
+with mp.Pool(mp.cpu_count()) as pool:
+    wiki_token["processed_soup"] = pool.map(preprocess_sentences, wiki_token["soup"])
 
 # %% (create bm25 class)
 wiki_bm = wiki_token["processed_soup"].copy().to_list()
@@ -66,7 +67,7 @@ wiki_bm_token = [doc.split(" ") for doc in wiki_bm]
 bm25 = bm(wiki_bm_token)
 
 # %% (run query)
-query = "CLOUD 2021 : 10th International Conference on Cloud Computing: Services and Architecture"
+query = "AMIA 2022 Informatics Summit: From discovering innovative methods to learning from exciting real-world applications, AMIA 2022 Informatics Summit attendees will experience the full range of cutting-edge work in translational informatics and clinical data science from inception to implementation. This conference is the ideal setting for researchers, educators, data scientists, software developers and analysts, students, and industry professionals. The size of the conference makes it ideal for developing meaningful new connections and partnerships while learning practical advice to solve real-world challenges. New to the AMIA 2022 Informatics Summit, we have expanded upon the previous Informatics Implementation track to include it as a new theme: Applied Informatics. In addition to selecting one of the three core Programmatic Tracks (Clinical Research Informatics, Data Science, Translational Bioinformatics), authors/presenters can also choose to designate their submission as part of the Applied Informatics theme to highlight the crucial application and implementation focus of their work. This is first time the Informatics Summit convenes outside of San Francisco. We are confident Chicago will bring new collaborations and connections. We look forward to receiving your submissions"
 query = preprocess_sentences(query)
 
 token_query = query.split(" ")
