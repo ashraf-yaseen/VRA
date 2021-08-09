@@ -214,7 +214,7 @@ with st.form(key = "form_1"):
 
 # create recommendations based on recommender algorithm and input type
 if rec_type == "BM25" and query_type == "Textbox":
-    query = st.sidebar.text_input("Enter your query", '', help = "Please enter the query you want conference recommendations for")
+    query = st.sidebar.text_area("Enter your query", '', help = "Please enter the query you want conference recommendations for")
     if not query: 
         st.write("Please enter the query you want conference recommendations for")
         st.stop()
@@ -239,7 +239,7 @@ elif rec_type == "BM25" and query_type == "File":
     st.table(recs[["Conference Title", "Conference Webpage"]])
     st.stop()
 elif rec_type == "Doc2Vec" and query_type == "Textbox":
-    query = st.sidebar.text_input("Enter your query", '', help = "Please enter the query you want conference recommendations for")
+    query = st.sidebar.text_area("Enter your query", '', help = "Please enter the query you want conference recommendations for")
     if not query: 
         st.write("Please enter the query you want conference recommendations for")
         st.stop()
