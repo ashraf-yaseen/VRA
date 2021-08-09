@@ -142,7 +142,7 @@ def createDoc2VecObject(corpus, data_col):
 
     return wiki_gensim
 
-@st.cache(suppress_st_warning = True)
+@st.cache(suppress_st_warning = True, allow_output_mutation=True)
 def createModel(corpus):
     model = gensim.models.doc2vec.Doc2Vec(vector_size = 50, min_count = 2, epochs = 40)
     model.build_vocab(corpus)
