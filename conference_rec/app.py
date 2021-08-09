@@ -206,7 +206,7 @@ if wikicfp is not None:
     st.dataframe(wiki_token.head(1000), 1080)
 
 # define batch element for choosing which type of recommender to use
-with st.form(key = "form_1"):
+with st.sidebar.form(key = "form_1"):
     rec_type = st.radio("Choose a recommender", ("BM25", "Doc2Vec"))
     query_type = st.radio("Choose query format", ("File", "Textbox"))
     number_of_recs = st.number_input("How many reccomendations would you like", 5, 50, value = 10, step = 5) 
