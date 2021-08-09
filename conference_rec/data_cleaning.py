@@ -1,5 +1,6 @@
 #%%
 import glob
+from io import BytesIO
 import nltk
 
 import multiprocessing as mp
@@ -9,7 +10,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 #%%
-def read_folder(path: str) -> pd.DataFrame:
+def readFolder(path: str) -> pd.DataFrame:
     """
     Reads all given csv files in a directory and outputs a dataframe of all csv files concatenated together
 
@@ -18,15 +19,29 @@ def read_folder(path: str) -> pd.DataFrame:
     """
     files = glob.glob(f"{path}/*.csv") 
     
-    dfs = []
-    for a_file in files:
-        dfs.append(pd.read_csv(a_file, index_col = 0, header = 0))
+    dfs = [pd.read_csv(a_file, index_col = 0, header = 0) for a_file in files]
+
+    collective_df = pd.concat(dfs, ignore_index = True)
+
+    return collective_df
+
+def readFolderST(input_files: BytesIO) -> pd.DataFrame:
+    """
+    Reads all given csv files in a directory and outputs a dataframe of all csv files concatenated together
+
+    Input Args: all relevant files in BytesIO format for streaming
+    Output: Dataframe containing all data from all input csv files
+    """
+    for input_file in input_files:
+        input_file.seek(0)
+
+    dfs = [pd.read_csv(input_file, index_col = 0, header = 0) for input_file in input_files]
     
     collective_df = pd.concat(dfs, ignore_index = True)
 
     return collective_df
 
-def better_dates(df: pd.DataFrame, date_column: str = "Conference Date") -> pd.DataFrame:
+def betterDates(df: pd.DataFrame, date_column: str = "Conference Date") -> pd.DataFrame:
     """
     Takes date column and creates two new columns: start date and end date in datetime format for easy usage
 
@@ -40,7 +55,7 @@ def better_dates(df: pd.DataFrame, date_column: str = "Conference Date") -> pd.D
 
     return df
 
-def unique_confs_per_year(df: pd.DataFrame) -> pd.DataFrame:
+def uniqueConfsPerYear(df: pd.DataFrame) -> pd.DataFrame:
     """
 
     Takes input dataframe and  drops all non-unique entries per each year
@@ -69,11 +84,16 @@ def processCorpus(data):
 
     return wiki_token
 
-def preprocess_sentences(text):
+def preprocess_sentences(text, lemma_func):
+    stop_words = set(stopwords.words("english"))
+    verb_codes = {"VB", "VBD", "VBG", "VBN", "VBP", "VBZ"}
+
     text = text.lower()
     temp_sent = []
+
     words = nltk.word_tokenize(text)
     tags = nltk.pos_tag(words)
+
     for i, word in enumerate(words):
         if tags[i][1] in verb_codes:
             lemmatized = lemmatizer.lemmatize(word, 'v')
@@ -81,7 +101,7 @@ def preprocess_sentences(text):
             lemmatized = lemmatizer.lemmatize(word)
         if lemmatized not in stop_words and lemmatized.isalpha():
             temp_sent.append(lemmatized)
-            
+
     finalsent = ' '.join(temp_sent)
     finalsent = finalsent.replace("n't", " not")
     finalsent = finalsent.replace("'m", " am")
@@ -90,12 +110,12 @@ def preprocess_sentences(text):
     finalsent = finalsent.replace("'ll", " will")
     finalsent = finalsent.replace("'ve", " have")
     finalsent = finalsent.replace("'d", " would")
-    
+
     return finalsent
 
-def multiprocessApply(function, corpus, data_col, new_col):
+def multiprocessApply(function, corpus, data_col, new_col, lemma_func):
     with mp.Pool(mp.cpu_count()) as pool:
-        corpus[new_col] = pool.map(function, corpus[data_col])
+        corpus[new_col] = pool.map(function, corpus[data_col], lemma_func)
 
     return corpus
 
@@ -106,16 +126,12 @@ if __name__ == "__main__":
     nltk.download("wordnet")
     nltk.download("stopwords")
 
-    stop_words = set(stopwords.words("english"))
-
-    verb_codes = {"VB", "VBD", "VBG", "VBN", "VBP", "VBZ"}
-
     lemmatizer = setLemmatizer()
 
-    wikicfp = read_folder("/workspaces/VRA/conference_rec/wikicfp_csv")
-    wikicfp = unique_confs_per_year(wikicfp)
-    wikicfp = better_dates(wikicfp)
+    wikicfp = readFolder("/workspaces/VRA/conference_rec/wikicfp_csv")
+    wikicfp = uniqueConfsPerYear(wikicfp)
+    wikicfp = betterDates(wikicfp)
 
     wiki_token = processCorpus(wikicfp)
 
-    wiki_token = multiprocessApply(preprocess_sentences, wiki_token, "soup", "processed_soup")
+    wiki_token = multiprocessApply(preprocess_sentences, wiki_token, "soup", "processed_soup", lemma_func = lemmatizer)

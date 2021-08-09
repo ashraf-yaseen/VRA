@@ -39,15 +39,11 @@ if __name__ == "__main__":
     nltk.download("wordnet")
     nltk.download("stopwords")
 
-    stop_words = set(stopwords.words("english"))
-
-    verb_codes = {"VB", "VBD", "VBG", "VBN", "VBP", "VBZ"}
-
     lemmatizer = dataClean.setLemmatizer()
 
-    wikicfp = dataClean.read_folder("/workspaces/VRA/conference_rec/wikicfp_csv")
-    wikicfp = dataClean.unique_confs_per_year(wikicfp)
-    wikicfp = dataClean.better_dates(wikicfp)
+    wikicfp = dataClean.readFolder("/workspaces/VRA/conference_rec/wikicfp_csv")
+    wikicfp = dataClean.uniqueConfsPerYear(wikicfp)
+    wikicfp = dataClean.betterDates(wikicfp)
 
     wiki_token = dataClean.processCorpus(wikicfp)
 
