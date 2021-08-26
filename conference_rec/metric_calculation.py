@@ -36,6 +36,20 @@ def average_precision_k(df, k):
 
     return avg_precision_score
 
+def reciprocal_rank(df, k):
+    df = df.reset_index()
+
+    if len(df) > k:
+        ratings = df["User Rating"][:k]
+    else:
+        ratings = df["User Rating"]
+
+    indices = ratings[ratings >= 3].index[0]
+    reciprocal_rank = 1/(indices + 1)
+
+    return reciprocal_rank
+
+
 def readFolder(path):
     files = glob.glob(f"{path}/*.csv") 
     
@@ -58,25 +72,31 @@ if __name__ == "__main__":
 
     bm_25_precision = [precision_k(df, 10) for df in bm25_ratings]
     bm_25_avg_precision = [average_precision_k(df, 10) for df in bm25_ratings]
+    bm_25_reciprocal_rank = [reciprocal_rank(df, 10) for df in bm25_ratings]
     bm_25_mean_average_precision = np.mean(bm_25_avg_precision)
+    bm_25_mean_reciprocal_rank = np.mean(bm_25_reciprocal_rank)
 
     doc_2_vec_precision = [precision_k(df, 10) for df in doc2vec_ratings]
     doc_2_vec_avg_precision = [average_precision_k(df, 10) for df in doc2vec_ratings]
+    doc_2_vec_reciprocal_rank = [reciprocal_rank(df, 10) for df in doc2vec_ratings]
     doc_2_vec_mean_average_precision = np.mean(doc_2_vec_avg_precision)
+    doc_2_vec_mean_reciprocal_rank = np.mean(doc_2_vec_reciprocal_rank)
 
     tfidf_precision = [precision_k(df, 10) for df in tfidf_ratings]
     tfidf_avg_precision = [average_precision_k(df, 10) for df in tfidf_ratings]
+    tfidf_reciprocal_rank = [reciprocal_rank(df, 10) for df in tfidf_ratings]
     tfidf_mean_average_precision = np.mean(tfidf_avg_precision)
+    tfidf_mean_reciprocal_rank = np.mean(tfidf_reciprocal_rank)
 
     excel_name = filename()
 
     with pd.ExcelWriter(excel_name) as writer:
-        pd.Series(bm_25_precision).to_excel(writer, sheet_name = "BM25 Precision@k", index = False)
+        pd.Series(bm_25_mean_reciprocal_rank).to_excel(writer, sheet_name = "BM25 MRR@k", index = False)
         pd.Series(bm_25_avg_precision).to_excel(writer, sheet_name = "BM25 AP@k", index = False)
         pd.Series(bm_25_mean_average_precision).to_excel(writer, sheet_name = "BM25 Mean AP@k", index = False)
-        pd.Series(doc_2_vec_precision).to_excel(writer, sheet_name = "Doc2Vec Precision@k", index = False)
+        pd.Series(doc_2_vec_mean_reciprocal_rank).to_excel(writer, sheet_name = "Doc2Vec MRR@k", index = False)
         pd.Series(doc_2_vec_avg_precision).to_excel(writer, sheet_name = "Doc2Vec AP@k", index = False)
         pd.Series(doc_2_vec_mean_average_precision).to_excel(writer, sheet_name = "Doc2Vec Mean AP@k", index = False)
-        pd.Series(tfidf_precision).to_excel(writer, sheet_name = "TFIDF Precision@k", index = False)
+        pd.Series(tfidf_mean_reciprocal_rank).to_excel(writer, sheet_name = "TFIDF MRR@k", index = False)
         pd.Series(tfidf_avg_precision).to_excel(writer, sheet_name = "TFIDF AP@k", index = False)
         pd.Series(tfidf_mean_average_precision).to_excel(writer, sheet_name = "TFIDF Mean AP@k", index = False)
