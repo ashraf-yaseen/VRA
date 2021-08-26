@@ -8,7 +8,6 @@ import numpy as np
 
 
 def precision_k(df, k):
-    
     if len(df) > k:
         ratings = df["User Rating"][:k]
     else:
@@ -19,37 +18,15 @@ def precision_k(df, k):
     for item in ratings:
         if item >= 3:
             relevant += 1
-    
+
     precision_score = relevant/k
 
     return precision_score
 
 
 def average_precision_k(df, k):
-    
-    def precision_k(df, k):
-        
-        if len(df) > k:
-            ratings = df["User Rating"][:k]
-        else:
-            ratings = df["User Rating"]
+    precision_list = [precision_k(df, i) for i in range(1, k+1, 1)]
 
-        relevant = 0
-
-        for item in ratings:
-            if item >= 3:
-                relevant += 1
-        
-        precision_score = relevant/k
-
-        return precision_score
-
-    precision_list = []
-
-    for i in range(1, k+1, 1):
-        precision_value = precision_k(df, i)
-        precision_list.append(precision_value)
-    
     avg_precision_df = df.copy()
     avg_precision_df["precision@i"] = precision_list
 
