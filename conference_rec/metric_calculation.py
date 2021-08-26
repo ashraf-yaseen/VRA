@@ -45,7 +45,7 @@ def readFolder(path):
 
 def filename(path= "/workspaces/VRA/conference_rec/app_ratings/"):
     today = datetime.now(pytz.timezone("US/Central")).date()
-    excel_name = f"{path}LC_conference_recommender_evaluations_{today}.xlsx"
+    excel_name = f"{path}conference_recommender_evaluations_{today}.xlsx"
 
     return excel_name
 
