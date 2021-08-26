@@ -45,7 +45,7 @@ def readFolder(path):
 
 def filename(path= "/workspaces/VRA/conference_rec/app_ratings/"):
     today = datetime.now(pytz.timezone("US/Central")).date()
-    excel_name = f"{path}conference_recommender_evaluations_{today}.xlsx"
+    excel_name = f"{path}LC_conference_recommender_evaluations_{today}.xlsx"
 
     return excel_name
 
@@ -56,33 +56,16 @@ if __name__ == "__main__":
     doc2vec_ratings = readFolder("/workspaces/VRA/conference_rec/app_ratings/doc2vec")
     tfidf_ratings = readFolder("/workspaces/VRA/conference_rec/app_ratings/tfidf")
 
-    bm_25_precision = []
-    bm_25_avg_precision = []
-    doc_2_vec_precision = []
-    doc_2_vec_avg_precision = []
-    tfidf_precision = []
-    tfidf_avg_precision = []
-
-    for df in bm25_ratings:
-        bm25_df_precision = precision_k(df, 10)
-        bm25_df_avg_precision = average_precision_k(df, 10)
-        bm_25_precision.append(bm25_df_precision)
-        bm_25_avg_precision.append(bm25_df_avg_precision)
-
-    for df in doc2vec_ratings:
-        doc_2_vec_df_precision = precision_k(df, 10)
-        doc_2_vec_df_avg_precision = average_precision_k(df, 10)
-        doc_2_vec_precision.append(doc_2_vec_df_precision)
-        doc_2_vec_avg_precision.append(doc_2_vec_df_avg_precision)
-
-    for df in tfidf_ratings:
-        tfidf_df_precision = precision_k(df, 10)
-        tfidf_df_avg_precision = average_precision_k(df, 10)
-        tfidf_precision.append(tfidf_df_precision)
-        tfidf_avg_precision.append(tfidf_df_avg_precision)
-
+    bm_25_precision = [precision_k(df, 10) for df in bm25_ratings]
+    bm_25_avg_precision = [average_precision_k(df, 10) for df in bm25_ratings]
     bm_25_mean_average_precision = np.mean(bm_25_avg_precision)
+
+    doc_2_vec_precision = [precision_k(df, 10) for df in doc2vec_ratings]
+    doc_2_vec_avg_precision = [average_precision_k(df, 10) for df in doc2vec_ratings]
     doc_2_vec_mean_average_precision = np.mean(doc_2_vec_avg_precision)
+
+    tfidf_precision = [precision_k(df, 10) for df in tfidf_ratings]
+    tfidf_avg_precision = [average_precision_k(df, 10) for df in tfidf_ratings]
     tfidf_mean_average_precision = np.mean(tfidf_avg_precision)
 
     excel_name = filename()
