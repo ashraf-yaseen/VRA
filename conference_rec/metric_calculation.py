@@ -50,7 +50,12 @@ def average_precision_k(df, k):
         precision_value = precision_k(df, i)
         precision_list.append(precision_value)
     
-    avg_precision_score = np.mean(precision_list)
+    avg_precision_df = df.copy()
+    avg_precision_df["precision@i"] = precision_list
+
+    avg_precision_df = avg_precision_df[avg_precision_df["User Rating"] >= 3]
+
+    avg_precision_score = np.mean(avg_precision_df["precision@i"])
 
     return avg_precision_score
 
