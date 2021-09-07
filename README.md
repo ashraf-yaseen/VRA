@@ -6,7 +6,7 @@ Developed by researchers from Department of Biostats and Data Science, UTSPH.
 Main contributions:
 
 System snapshot:
-![system snapshot](https://github.com/ashraf-yaseen/VRA/images/7.system.png?raw=true)
+![system snapshot](images/7.system.png?raw=true)
 
 ## Getting Started
 
