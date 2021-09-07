@@ -3,12 +3,19 @@
 The ongoing projects of VRA, which is a comprehensive research recommendation system providing recommendations regarding datasets, publications, grants and collaborators for scholars of interest.
 Developed by researchers from Department of Biostats and Data Science, UTSPH.
 
+Main contributions:
+
+System snapshot:
+![system snapshot](https://github.com/ashraf-yaseen/VRA/images/system.jpg?raw=true)
+
 ## Getting Started
 
 
-### Prerequisites
+### Some simple examples to use our codes
+### data 
 
-What things you need to install the software and how to install them
+### examples 
+
 
 ```
 Give examples
@@ -19,14 +26,7 @@ Give examples
 
 * [torch](https://pytorch.org/)  
 * [Transformers](https://huggingface.co/transformers/) 
-* [Pandas]
-* [Numpy]
-* etc
-
-
-## Contributing
-
-Please read [CONTRIBUTING.md] for submitting pull requests to us.
+* [Pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), [skearn](https://scikit-learn.org/stable/), and other common machine learning packages, see requirements.txt for details
 
 
 ## Authors
