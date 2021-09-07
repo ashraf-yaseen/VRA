@@ -3,9 +3,9 @@
 The ongoing projects of VRA, which is a comprehensive research recommendation system providing recommendations regarding datasets, publications, grants and collaborators for scholars of interest.
 Developed by researchers from Department of Biostats and Data Science, UTSPH.
 
-**Main contributions**:
+** 1. Main contributions**:
 
-**System snapshot**:
+** 2. System snapshot**:
 ![system snapshot](images/7.system.png?raw=true)
 
 ## Getting Started
