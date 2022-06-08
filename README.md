@@ -1,6 +1,6 @@
 # Virtual Research Assistant (VRA)
 
-The ongoing projects of VRA, which is a comprehensive research recommendation system providing recommendations regarding datasets, publications, grants and collaborators for scholars of interest.
+The ongoing projects of Virtual Research Assistant (VRA), which is a comprehensive research recommendation system providing recommendations regarding datasets, publications, grants and collaborators for scholars of interest in the population health domain.
 Developed by researchers from Department of Biostats and Data Science, UTSPH.
 
 **1. Main contributions**:
@@ -18,14 +18,15 @@ Developed by researchers from Department of Biostats and Data Science, UTSPH.
 
 
 ```
-Give examples
+examples to use code to crawl and prepare your own data for experiments
 ```
 
 
 ## Built With
 
-* [torch](https://pytorch.org/)  
-* [Transformers](https://huggingface.co/transformers/) 
+* [torch](https://pytorch.org/): one of the most commonly used deep learning library  
+* [Pytorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/): pytorch built for graphs data
+* [Transformers](https://huggingface.co/transformers/): pytorch library of transformers 
 * [Pandas](https://pandas.pydata.org/), [numpy](https://numpy.org/), [skearn](https://scikit-learn.org/stable/), and other common machine learning packages, see requirements.txt for details
 
 
