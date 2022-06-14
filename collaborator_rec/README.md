@@ -12,9 +12,11 @@ We've highlighted a novel collaborator recommendation based on two inductive GNN
 **2. key component snapshot**:
 
 * GraphSAGE
+
 ![model 1: GraphSAGE]('Figure 3.jpeg?raw=true')
 
 * TGN 
+
 ![model 2: TGN]('Figure 5.jpg?raw=true')
 
 

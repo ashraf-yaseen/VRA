@@ -8,11 +8,25 @@ Developed by researchers from Department of Biostats and Data Science, UTSPH.
 **2. System snapshot**:
 ![system snapshot](images/7.system.png?raw=true)
 
+
+
+## File organization 
+
+This repo is organized by different components and projects folders:
+* dataset_rec: dataset recommendation project, led by **Ginny** 
+* grants_rec: grant recommendation project, led by **Ginny**
+* collaborator_rec: collaborator recommendation project, led by **Ginny**
+* conference_rec: conference recommendation project, led by **Rachit**
+* uncertainty_rec: uncertainty quantification incorporated recommender project, led by **Ginny**
+* preparation: initial data processing for the aforementioned project, led by **Braja*
+
+
+
+
 ## Getting Started
 
 
 ### Some simple examples to use our codes
-### data 
 
 ### examples 
 
