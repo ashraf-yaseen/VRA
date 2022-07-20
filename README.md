@@ -5,9 +5,11 @@ Developed by researchers from Department of Biostats and Data Science, UTSPH.
 
 **1. Main contributions**:
 
-**2. System snapshot**:
+**2. A. System snapshot**:
 ![system snapshot](images/7.system.png?raw=true)
 
+**2. B. Service platform**:
+![service platform]()
 
 
 ## File organization 
@@ -25,14 +27,11 @@ This repo is organized by different components and projects folders:
 
 ## Getting Started
 
-
-### Some simple examples to use our codes
-
 ### examples 
 
 
 ```
-examples to use code to crawl and prepare your own data for experiments
+See each component for detailed usage of codes
 ```
 
 
