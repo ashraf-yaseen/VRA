@@ -9,7 +9,7 @@ Developed by researchers from Department of Biostats and Data Science, UTSPH.
 ![system snapshot](images/7.system.png?raw=true)
 
 **2. B. Service platform**:
-![service platform]()
+![service platform](images/2.serviceplatform.PNG)
 
 
 ## File organization 
@@ -24,11 +24,9 @@ This repo is organized by different components and projects folders:
 
 
 
-
 ## Getting Started
 
 ### examples 
-
 
 ```
 See each component for detailed usage of codes
@@ -53,7 +51,4 @@ This project is licensed under the MIT License
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
-
+* Hat tip to [TGN repo](https://github.com/twitter-research/tgn), the [RS repo](https://github.com/grahamjenson/list_of_recommender_systems) and [another RS repo](https://github.com/hongleizhang/RSPapers) for providing papers and codes for us to start with initially
