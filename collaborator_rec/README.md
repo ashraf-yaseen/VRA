@@ -13,11 +13,11 @@ We've highlighted a novel collaborator recommendation based on two inductive GNN
 
 * GraphSAGE
 
-![model 1: GraphSAGE](Figure 3.jpeg)
+![model 1: GraphSAGE](Figure_3.jpeg)
 
 * TGN 
 
-![model 2: TGN](Figure 5.jpg)
+![model 2: TGN](Figure_5.jpeg)
 
 
 ## File organization 
