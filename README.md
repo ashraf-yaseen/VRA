@@ -20,7 +20,7 @@ This repo is organized by different components and projects folders:
 * collaborator_rec: collaborator recommendation project, led by **Ginny**
 * conference_rec: conference recommendation project, led by **Rachit**
 * uncertainty_rec: uncertainty quantification incorporated recommender project, led by **Ginny**
-* preparation: initial data processing for the aforementioned project, led by **Braja*
+* preparation: initial data processing for the aforementioned project, led by **Braja**
 
 
 
