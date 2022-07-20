@@ -11,7 +11,7 @@ As seen in [Journal]
 
 
 
-**2. key snapshots **:
+**2. key snapshots**:
 
 * Part 1: grant & dataset recommender component
 ![grant & dataset main component](berusageinGrant.png)
