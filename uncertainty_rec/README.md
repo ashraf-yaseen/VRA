@@ -14,12 +14,13 @@ As seen in [Journal]
 **2. key snapshots **:
 
 * Part 1: grant/dataset recommender component
-![grant/dataset main component](bertusageinGrant.png)
-![grant/dataset rec UQ result](Figure_7.png)
+![grant & dataset main component](bertusageinGrant.png)
+![grant & dataset rec UQ result](Figure_7.png)
 
 * Part 2: collaborator recommender component 
 
-![collborator rec UQ result](Figure_5.jpeg)
+![collborator: main component](Figure_5.jpeg)
+![collborator: rec UQ result](Figure_9.jpeg)
 
 
 ## File organization 
