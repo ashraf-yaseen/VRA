@@ -17,12 +17,12 @@ This component consisits of 3 sub-projects
 
 All 3 sub-projects had similar process. The whole system looks like below:
 
-![system]('1.system.png?raw=true')
+![system](1.system.png)
 
 
 and main model usage:
 
-![model]('2.bertusage.png?raw=true')
+![model](2.bertusage.png)
 
 
 
